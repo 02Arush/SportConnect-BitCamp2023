@@ -26,6 +26,7 @@ const Body = () => {
   return (
     <View style={styles.Body}>
       <Text>Body</Text>
+      <Text>Hello World</Text>
     </View>
   );
 };
