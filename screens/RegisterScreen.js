@@ -14,7 +14,7 @@ const RegisterScreen = () => {
 
   const handleSignUp = () => {
     if (password === confirmPassword) {
-      nav.navigate('Home');
+      nav.navigate('Login');
     } else {
       alert('Passwords do not match, please try again.');
     }
