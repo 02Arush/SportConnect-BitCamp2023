@@ -10,9 +10,8 @@ const PostScreen = ({ handleAddEventData }) => {
   const [sport, setSport] = useState("");
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
-
   const [location, setLocation] = useState("");
-  const [attendance, setAttendance] = useState("");
+  const [attendance, setAttendance] = useState(0);
 
   const handlePostPress = () => {
     if (sport && date && time && location && attendance) {

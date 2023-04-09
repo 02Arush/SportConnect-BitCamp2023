@@ -19,7 +19,7 @@ const EventCard = ({ title, date, time, location, attendence }) => {
       setIconColor("#000")
     } else {
       // Make it attending
-      setAttendees(attendees+1)
+      setAttendees(((attendees-1)+2))
       setIconColor("#2b8a3e")
     }
     setAttending(!attending)
