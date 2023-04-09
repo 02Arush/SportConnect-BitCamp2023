@@ -4,6 +4,7 @@ import Constants from "expo-constants";
 import IconButton from "../components/IconButton";
 import EventCard from "./../components/EventCard";
 import EVENT_DATA from "../appdata/EventData";
+import { useNavigation } from '@react-navigation/native';
 
 // THIS EVENT DATA WILL BE REPLACED OR MODIFIED BY WHATEVER DATA WE GET FROM THE DATABASE LATER
 // THIS IS JUST A PLACEHOLDER FOR TESTING THE UI
@@ -20,6 +21,8 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+
+
 const Header = () => {
   return (
     <View style={styles.Header}>
@@ -49,12 +52,14 @@ const Body = () => {
 };
 
 const NavBar = () => {
+  const nav = useNavigation();
+
   const handleEventsButton = () => {
     console.log("events button clicked");
   };
 
   const handleAddEvent = () => {
-    console.log("add button clicked");
+    nav.navigate('Post');
   };
 
   const handleSettingsButton = () => {
@@ -63,10 +68,6 @@ const NavBar = () => {
 
   return (
     <View style={styles.NavBar}>
-      <IconButton
-        iconName="ios-calendar-outline"
-        onClick={handleEventsButton}
-      />
       <IconButton iconName="ios-add-outline" onClick={handleAddEvent} />
       <IconButton
         iconName="ios-settings-outline"

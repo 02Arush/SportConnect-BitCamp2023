@@ -7,7 +7,7 @@ import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import {StatusBar} from "react-native";
-import PostScreen from './screens/PostScreen;
+import PostScreen from './screens/PostScreen';
 
 // Create a Stack Navigator
 const Stack = createStackNavigator();
