@@ -4,6 +4,8 @@ import Constants from 'expo-constants';
 import { useState } from 'react';
 import InputWithLabel from '../components/InputWithLabel.js';
 import { useNavigation } from '@react-navigation/native';
+import userList from '../userList.js'
+
 
 const RegisterScreen = () => {
   const nav = useNavigation();
@@ -14,12 +16,21 @@ const RegisterScreen = () => {
 
   const handleSignUp = () => {
     if (password === confirmPassword) {
+      if(email==="" || password===""){
+        alert("Enter valid email.");
+        return; 
+      }
+      if (userList.has(`${email}`)){
+        alert('User Exists. Please try logging in.');
+        nav.navigate('Login');
+        return;
+      }
+      userList.set(`${email}`, `${password}`);
       nav.navigate('Login');
     } else {
       alert('Passwords do not match, please try again.');
     }
   };
-
   return (
     <View style={styles.container}>
       <InputWithLabel

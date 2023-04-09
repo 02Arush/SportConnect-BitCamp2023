@@ -4,6 +4,8 @@ import Constants from 'expo-constants';
 import { useState } from 'react';
 import InputWithLabel from '../components/InputWithLabel.js';
 import { useNavigation } from '@react-navigation/native';
+import userList from '../userList.js'
+
 
 
 const LoginScreen = () => {
@@ -13,7 +15,12 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
 
   const handleLoginPress = () => {
-    nav.navigate('Home');
+    if (userList.has(`${email}`) && userList.get(`${email}`)===password){
+      nav.navigate('Home');
+    }else{
+      alert('Incorrect Email or Password');
+     // nav.navigate('Login');
+    }
   };
 
   const handleSignupPress = () => {
