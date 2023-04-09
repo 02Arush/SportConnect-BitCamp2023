@@ -1,41 +1,42 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
+import { useState } from "react";
 import Constants from "expo-constants";
 import IconButton from "../components/IconButton";
 import EventCard from "./../components/EventCard";
-import EVENT_DATA from "../appdata/EventData";
 import { useNavigation } from '@react-navigation/native';
 
 // THIS EVENT DATA WILL BE REPLACED OR MODIFIED BY WHATEVER DATA WE GET FROM THE DATABASE LATER
 // THIS IS JUST A PLACEHOLDER FOR TESTING THE UI
 
-const accentColor = "#D9D9D9";
-const HomeScreen = () => {
+const accentColor = "#339cf7";
+
+const HomeScreen = ({ eventData }) => {
   return (
     <View style={styles.container}>
       <Header />
-      <Body />
+      <Body data={eventData} />
       <NavBar />
     </View>
   );
 };
 
-export default HomeScreen;
 
+export default HomeScreen;
 
 const Header = () => {
   return (
     <View style={styles.Header}>
-      <Text style={{fontSize: 18}}>Events</Text>
+      <Text style={{fontSize: 24}}>Events</Text>
     </View>
   );
 };
 
-const Body = () => {
+const Body = ({ data }) => {
   return (
     <View style={styles.Body}>
       <FlatList
-        data={EVENT_DATA}
+        data={data}
         renderItem={({ item }) => (
           <EventCard 
             title={item.Title}
@@ -54,9 +55,6 @@ const Body = () => {
 const NavBar = () => {
   const nav = useNavigation();
 
-  const handleEventsButton = () => {
-    console.log("events button clicked");
-  };
 
   const handleAddEvent = () => {
     nav.navigate('Post');
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
   },
 
   Header: {
-    paddingTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight+5,
     paddingBottom: 10,
     backgroundColor: accentColor,
     flexDirection: "row",
@@ -109,6 +107,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: accentColor,
     alignSelf: "stretch",
-    paddingTop: 10,
+    paddingTop: 1,
   },
 });
