@@ -1,81 +1,125 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React from 'react'
-import Constants from 'expo-constants';
-import { useState } from 'react';
-import InputWithLabel from '../components/InputWithLabel.js';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import Constants from "expo-constants";
+import InputWithLabel from "../components/InputWithLabel";
+import { useNavigation } from "@react-navigation/native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
-const PostScreen = () => {
+const PostScreen = ({ handleAddEventData }) => {
   const nav = useNavigation();
+  const [sport, setSport] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
 
-  const [sport, setSport] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [attendance, setAttendance] = useState('');
+  const [location, setLocation] = useState("");
+  const [attendance, setAttendance] = useState("");
 
   const handlePostPress = () => {
-    nav.navigate('Home');
+    if (sport && date && time && location && attendance) {
+      const newEvent = {
+        id: `${sport}${date}${time}`,
+        Title: sport,
+        Date: date.toDateString(),
+        Time: time.toTimeString(),
+        Location: location,
+        Attendence: attendance,
+      };
+      handleAddEventData(newEvent);
+      nav.navigate("Home");
+    } else {
+      alert("Please fill all fields");
+    }
   };
 
   const handleCancelPress = () => {
-    nav.navigate('Home');
+    nav.navigate("Home");
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+  };
+
+  const handleTimeChange = (event, selectedTime) => {
+    const currentTime = selectedTime || time;
+    setTime(currentTime);
   };
 
   return (
     <View style={styles.container}>
-        <InputWithLabel
-          label="Sport"
-          placeholder="Type your sport"
-          value={sport}
-          onChangeText={setSport}
-        />
-        <InputWithLabel
-          label="Date"
-          placeholder="Type your date"
+      <InputWithLabel
+        label="Sport"
+        placeholder="Type your sport"
+        value={sport}
+        onChangeText={setSport}
+      />
+      {/* <InputWithLabel
+        label="Date"
+        placeholder="Date of Event"
+        value={date}
+        onChangeText={setDate}
+      /> */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        <DateTimePicker
           value={date}
-          onChangeText={setDate}
+          mode={"date"}
+          display="default"
+          onChange={handleDateChange}
         />
-        <InputWithLabel
-          label="Time"
-          placeholder="Type your time"
+        
+        <DateTimePicker
           value={time}
-          onChangeText={setTime}
+          mode={"time"}
+          display="default"
+          onChange={handleTimeChange}
         />
-        <InputWithLabel
-          label="Attendance"
-          placeholder="Type your attendance"
-          keyboardType="numeric"
-          value={'' + attendance}
-          onChangeText={setAttendance}
-        />
-        <Pressable style={styles.button} onPress={handlePostPress}>
-          <Text style={styles.buttonText}>Post</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={handleCancelPress}>
-          <Text style={styles.buttonText}>Cancel</Text>
-        </Pressable>
+      </View>
+      <InputWithLabel
+        label="Location"
+        placeholder="Location of Event"
+        value={location}
+        onChangeText={setLocation}
+      />
+      <InputWithLabel
+        label="Attendance"
+        placeholder="# of initial attendees"
+        keyboardType="numeric"
+        value={"" + attendance}
+        onChangeText={setAttendance}
+      />
+      <TouchableHighlight style={styles.button} onPress={handlePostPress}>
+        <Text style={styles.buttonText}>Post</Text>
+      </TouchableHighlight>
+      <TouchableHighlight style={styles.button} onPress={handleCancelPress}>
+        <Text style={styles.buttonText}>Cancel</Text>
+      </TouchableHighlight>
     </View>
-  )
-}
+  );
+};
 
-export default PostScreen
-
+export default PostScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: "#ecf0f1",
   },
   button: {
     marginTop: 16,
-    alignItems: 'center',
-    backgroundColor: '#34495e',
+    alignItems: "center",
+    backgroundColor: "#34495e",
     borderRadius: 8,
     padding: 16,
   },
   buttonText: {
     fontSize: 18,
-    color: '#fff',
+    color: "#fff",
   },
-})
+});
